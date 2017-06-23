@@ -4,7 +4,7 @@ class Socket {
   queue = []
 
   constructor() {
-    this.socket = new WebSocket('ws://localhost:5000/subscriptions', ['graphql-ws'])
+    this.socket = new WebSocket(`ws://${location.host}/subscriptions`, ['graphql-ws'])
 
     this.socket.onmessage = e => {
       const res = JSON.parse(e.data)
