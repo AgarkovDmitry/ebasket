@@ -1,7 +1,7 @@
 import { observer, inject } from 'mobx-react'
 import { compose, mapProps } from 'recompose'
 
-import Form from './Form'
+import Form from './form'
 
 export default compose(
   inject('graphQL'),
