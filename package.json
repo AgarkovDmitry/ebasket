@@ -11,6 +11,11 @@
   "author": "Aharkov D.",
   "license": "ISC",
   "dependencies": {
+    "@blueprintjs/core": "^1.21.0",
+    "@types/react": "^16.0.2",
+    "@types/react-dom": "^15.5.3",
+    "antd": "^2.11.2",
+    "awesome-typescript-loader": "^3.2.3",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
@@ -36,6 +41,7 @@
     "mongoose": "^4.10.4",
     "node-sass": "^4.5.3",
     "react": "^15.5.4",
+    "react-addons-css-transition-group": "^15.6.0",
     "react-dom": "^15.5.4",
     "react-loadable": "^4.0.1",
     "react-router": "^4.1.1",
@@ -43,6 +49,7 @@
     "sass-loader": "^6.0.5",
     "style-loader": "^0.18.1",
     "subscriptions-transport-ws": "^0.7.0",
+    "typescript": "^2.4.2",
     "webpack": "^3.0.0",
     "webpack-dev-middleware": "^1.10.2",
     "webpack-hot-middleware": "^2.18.0"

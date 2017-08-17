@@ -1,13 +1,17 @@
-import React from 'react'
+import * as React from 'react'
 import { observable, action, computed } from 'mobx'
 
-import styles from './style.less'
+const styles = require('./style.less')
 
-class Form extends React.Component {
-  @observable name = ''
-  @observable amount = 0
+interface Props{
+  createProduct: Function
+}
 
-  @observable error
+class Form extends React.Component<Props, null> {
+  @observable name: String = ''
+  @observable amount: String = '0'
+
+  @observable error: String
 
   @action updateName = e => this.name = e.target.value
   @action updateAmount = e => this.amount = e.target.value
@@ -17,8 +21,8 @@ class Form extends React.Component {
       this.error = 'Name is required'
       return false
     }
-    
-    return true
+    else
+      return true
   }
 
   @action submit = e => {

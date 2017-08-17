@@ -1,18 +1,19 @@
-import React from 'react'
+import * as React from 'react'
 import { Router, Route, Switch } from 'react-router'
 import { Provider } from 'mobx-react'
 import DevTools from 'mobx-react-devtools'
 import Loadable from 'react-loadable'
 
-import styles from './style.less'
+const styles = require('./style.less')
 
 import Header from 'components/others/header'
 import loading from 'components/others/loader'
 
-const Home = Loadable({
-  loader: () => import('components/pages/home-page'),
-  loading
-})
+import Home from 'components/pages/home-page'
+// const Home = Loadable({
+//   loader: () => import('components/pages/home-page'),
+//   loading
+// })
 
 export default ({ store }) => (
   <Provider {...store}>

@@ -4,6 +4,10 @@ class Socket {
   queue = []
 
   constructor() {
+    this.open()
+  }
+
+  open() {
     this.socket = new WebSocket(`${location.protocol.replace('http', 'ws')}//${location.host}/subscriptions`, ['graphql-ws'])
 
     this.socket.onmessage = e => {
@@ -15,12 +19,22 @@ class Socket {
       }
     }
     this.queue.push(() => this.send({ type: 'connection_init', payload: {} }))
+    if (this.callbacks['productCreated']) this.queue.push(() => this.productCreated(null))
+    if (this.callbacks['productUpdated']) this.queue.push(() => this.productUpdated(null))
+    if (this.callbacks['productRemoved']) this.queue.push(() => this.productRemoved(null))
 
-    this.socket.onopen = () => this.queue.map(func => func())
+    this.socket.onopen = () => {
+      while (this.queue.length > 0) {
+        this.queue[0]()
+        this.queue.shift()
+      }
+    }
+
+    this.socket.onclose = () => setTimeout(() => this.open(), 2000)
   }
 
   send(data) {
-    if (this.socket.readyState)
+    if (this.socket.readyState == 1)
       this.socket.send(JSON.stringify(data))
     else
       this.queue.push(() => this.socket.send(JSON.stringify(data)))
@@ -74,7 +88,7 @@ class Socket {
     const query = 'subscription { productCreated { _id, name, amount, completed } }'
     const id = 'productCreated'
 
-    this.callbacks[id] = cb
+    this.callbacks[id] = cb || this.callbacks[id]
     this.send({ id, type: 'start', payload: { query } })
   }
 
@@ -82,7 +96,7 @@ class Socket {
     const query = 'subscription { productUpdated { _id, name, amount, completed } }'
     const id = 'productUpdated'
 
-    this.callbacks[id] = cb
+    this.callbacks[id] = cb || this.callbacks[id]
     this.send({ id, type: 'start', payload: { query } })
   }
 
@@ -90,7 +104,7 @@ class Socket {
     const query = 'subscription { productRemoved }'
     const id = 'productRemoved'
 
-    this.callbacks[id] = cb
+    this.callbacks[id] = cb || this.callbacks[id]
     this.send({ id, type: 'start', payload: { query } })
   }
 }

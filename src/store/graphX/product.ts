@@ -2,12 +2,12 @@ import { observable, action } from 'mobx'
 import socket from './socket'
 
 class Product {
-  _id
-  @observable name
-  @observable amount
-  @observable completed
+  _id: string
+  @observable name: string
+  @observable amount: string
+  @observable completed: boolean
 
-  constructor({ _id, name, amount, completed }){
+  constructor({ _id, name, amount, completed }) {
     this._id = _id
     this.name = name
     this.amount = amount

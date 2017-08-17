@@ -25,6 +25,7 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.(js|jsx)?$/, loader: 'babel-loader', exclude: /node_modules/ },
+      { test: /\.(ts|tsx)?$/, loader: 'awesome-typescript-loader' },
       { test: /\.s?css$/, loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: ['css-loader?modules', 'sass-loader'] }) },
       { test: /\.less$/, loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: ['css-loader?modules', 'less-loader'] }) },
       { test: /\.(jpg|svg|png|ttf)$/, loader: 'file-loader?&name=images/[hash].[ext]' },
@@ -32,7 +33,7 @@ module.exports = {
   },
   resolve: {
     modules: ['node_modules', 'src'],
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx', '.ts', '.tsx']
   },
   devServer: {
     contentBase: './dist',

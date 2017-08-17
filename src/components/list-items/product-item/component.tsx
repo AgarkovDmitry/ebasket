@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 
-import styles from './style.less'
+const styles = require('./style.less')
 
 export default ({ name, amount, completed, remove, update }) => (
   <li className={styles.item}>
