@@ -7,11 +7,11 @@ import Product from 'components/list-items/product-item'
 const styles = require('./style.less')
 
 interface Props{
-  graphQL: any
+  data: any,
+  socket: any
 }
 
-export default class extends React.Component<Props, null> {
-  graphQL: any
+export default class extends React.PureComponent<Props, null> {
   pagSize: number = 8
   @observable filter: boolean = undefined
   @observable pagIndex: number = 0
@@ -23,8 +23,6 @@ export default class extends React.Component<Props, null> {
 
   constructor(props) {
     super(props)
-    this.graphQL = this.props.graphQL
-
     this.active = this.active.bind(this)
     this.complete = this.complete.bind(this)
     this.prevIndex = this.prevIndex.bind(this)
@@ -32,26 +30,26 @@ export default class extends React.Component<Props, null> {
   }
 
   @computed get isPaginated() {
-    let products = this.graphQL.products.data
+    let products = this.props.data.products.data
+
     if (this.filter != undefined)
-        products = products.filter(item => item.completed == this.filter)
+        products = products.filter(item => item[1].data.completed == this.filter)
+
     return products.length > this.pagSize
   }
 
   @computed get lastIndex() {
-    let products = this.graphQL.products.data
-
-    return Math.floor((products.length - 1) / this.pagSize)
+    return Math.floor((this.props.data.products.data.length - 1) / this.pagSize)
   }
 
   @computed get products() {
-    let products = this.graphQL.products.data
+    let products = this.props.data.products.data
+
     if (this.filter != undefined)
-        products = products.filter(item => item.completed == this.filter)
+        products = products.filter(item => item[1].data.completed == this.filter)
+
     if (products.length > this.pagSize)
         products = products.slice(this.pagIndex * this.pagSize, this.pagIndex * this.pagSize + this.pagSize)
-
-    products.map(item => item.fetch())
 
     return products
   }
@@ -63,7 +61,7 @@ export default class extends React.Component<Props, null> {
         <ul className={styles.list}>
         {
           this.products.map(
-            product => <Product key={product._id} item={product}/>
+            product => <Product key={product[0]} item={product[1]}/>
           )
         }
         </ul>

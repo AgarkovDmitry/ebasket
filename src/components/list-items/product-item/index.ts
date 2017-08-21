@@ -1,17 +1,23 @@
 import { observer, inject } from 'mobx-react'
-import { compose, branch, renderComponent, mapProps } from 'recompose'
+import { compose, branch, renderComponent, mapProps, lifecycle } from 'recompose'
 
 import Component from './component'
 import Loader from 'components/others/loader'
 
 export default compose(
-  inject('graphQL'),
+  inject('socket'),
+  lifecycle({
+    componentDidMount() {
+      const { item, socket } = this.props
+      item.data.name || socket.fetchProduct(item)
+    }
+  }),
   observer,
   mapProps(
-    ({ graphQL, item }) => ({
-      ...item,
-      remove: () => graphQL.removeProduct({ _id: item._id }),
-      update: () => graphQL.updateProduct({ _id: item._id, completed: !item.completed })
+    ({ socket, item }) => ({
+      ...item.data,
+      remove: () => socket.removeProduct({ _id: item.data._id }),
+      update: () => socket.updateProduct({ _id: item.data._id, completed: !item.data.completed })
     })
   ),
   branch(

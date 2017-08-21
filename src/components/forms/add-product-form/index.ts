@@ -4,9 +4,9 @@ import { compose, mapProps } from 'recompose'
 import Form from './form'
 
 export default compose(
-  inject('graphQL'),
+  inject('socket'),
   observer,
   mapProps(
-    ({ graphQL }) => ({ createProduct: graphQL.createProduct })
+    ({ socket }) => ({ createProduct: socket.createProduct })
   )
 )(Form)

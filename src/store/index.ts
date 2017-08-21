@@ -1,13 +1,14 @@
-import graphX from './graphX'
-import router from './router'
+import data from './data'
+import socket from './socket'
+
 
 class Store {
-  graphQL
-  router
+  data
+  socket
 
   constructor() {
-    this.graphQL = new graphX()
-    this.router = new router(this.graphQL)
+    this.data = new data()
+    this.socket = new socket(this.data)
   }
 }
 

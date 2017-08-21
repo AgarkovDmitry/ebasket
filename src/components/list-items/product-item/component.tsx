@@ -4,7 +4,7 @@ const styles = require('./style.less')
 
 export default ({ name, amount, completed, remove, update }) => (
   <li className={styles.item}>
-    <input type='checkbox' className={styles.toggle} onClick={update} defaultChecked={completed}/>
+    <input type='checkbox' className={styles.toggle} onClick={update} checked={completed} readOnly/>
     <label className={completed ? styles.completed : ''}>
       {name} - {amount}
     </label>

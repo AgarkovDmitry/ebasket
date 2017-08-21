@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Router, Route, Switch } from 'react-router'
+import createBrowserHistory from 'history/createBrowserHistory'
 import { Provider } from 'mobx-react'
 import DevTools from 'mobx-react-devtools'
 import Loadable from 'react-loadable'
@@ -17,7 +18,7 @@ import Home from 'components/pages/home-page'
 
 export default ({ store }) => (
   <Provider {...store}>
-    <Router history={store.router.history}>
+    <Router history={createBrowserHistory()}>
       <div>
         <Header/>
         <div className={styles.page}>

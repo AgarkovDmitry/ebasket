@@ -1,11 +1,17 @@
 import { observer, inject } from 'mobx-react'
-import { compose, branch, renderComponent, mapProps } from 'recompose'
+import { compose, lifecycle } from 'recompose'
 
 import Loader from 'components/others/loader'
 
 import Component from './component'
 
 export default compose(
-  inject('graphQL'),
+  inject('data', 'socket'),
+  lifecycle({
+    componentDidMount() {
+      const { data, socket } = this.props
+      data.products.data.length || socket.fetchProducts()
+    }
+  }),
   observer
 )(Component)
