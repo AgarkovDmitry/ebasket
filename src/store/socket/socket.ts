@@ -53,7 +53,6 @@ class Socket {
       const res = JSON.parse(data)
       if (res.type == 'data') {
         const cb = this.callbacks[res.id]
-        console.log(res.payload.data)
         const key = Object.keys(res.payload.data)[0]
         if (cb) cb(res.payload.data[key])
       }
